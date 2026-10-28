@@ -1,0 +1,20 @@
+"use client";
+import { CheckCircle } from "lucide-react";
+
+const VerificationSuccess = () => {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-card rounded-lg shadow-sm p-8 text-center">
+        <div className="mb-6">
+          <CheckCircle className="w-20 h-20 text-primary mx-auto" />
+        </div>
+
+        <h1 className="text-xl font-heading text-foreground mb-2">Account Verification Successful!</h1>
+
+        <p className="text-body text-foreground mb-8">Your account has been successfully verified.</p>
+      </div>
+    </div>
+  );
+};
+
+export default VerificationSuccess;
