@@ -4,7 +4,6 @@ import { ReceiptPDF } from "@/components/bookings/receipt-pdf";
 import { connectToDatabase } from "@/db/mongoose";
 import { getUserBooking } from "@/db/queries";
 import { auth } from "@/lib/auth";
-export const runtime = "nodejs";
 
 // ("use cache");
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
