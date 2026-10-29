@@ -1,12 +1,11 @@
 import "./globals.css";
 
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
-// import { connectToDatabase } from "@/db/mongoose";
 
 export default async function RootLayout({
   auth,
@@ -16,11 +15,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html suppressHydrationWarning lang="en" className={cn("font-sans", inter.variable)}>
       <body className="antialiased">
-        {auth}
-        {children}
-        <Toaster richColors />
+        <ThemeProvider attribute="class">
+          {auth}
+          {children}
+        </ThemeProvider>
+
+        <Toaster richColors closeButton={true} />
       </body>
     </html>
   );
