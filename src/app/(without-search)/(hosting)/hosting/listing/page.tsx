@@ -5,7 +5,6 @@ import ManageProperties from "@/components/create-property/manage-properties";
 import { Button } from "@/components/ui/button";
 import { AUTH_CONFIG } from "@/constants/auth.constants";
 import { getHostProperties } from "@/db/queries";
-import { delay } from "@/lib/delay";
 
 export const metadata: Metadata = {
   title: "Manage Properties | Host Dashboard",
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 const ManageList = async () => {
-  await delay(3000);
   const properties = await getHostProperties();
   return (
     <div className="max-w-7xl mx-auto px-4 pb-8">
@@ -25,13 +23,14 @@ const ManageList = async () => {
           </p>
         </div>
         <Button
-          type="button"
+          nativeButton={false}
           className="bg-primary text-primary-foreground px-4 py-5 text-base rounded-lg hover:bg-primary/90 transition-colors"
-        >
-          <Link href={AUTH_CONFIG.ROUTES.HOSTING_CREATE}>
-            <Plus /> Create Hotel
-          </Link>
-        </Button>
+          render={
+            <Link href={AUTH_CONFIG.ROUTES.HOSTING_CREATE}>
+              <Plus /> Create Hotel
+            </Link>
+          }
+        />
       </div>
       <ManageProperties properties={properties} />
     </div>
