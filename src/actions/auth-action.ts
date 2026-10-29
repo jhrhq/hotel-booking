@@ -2,17 +2,12 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import z from "zod";
 import { actionCreator } from "@/actions/action-creator";
+import { AUTH_CONFIG } from "@/constants/auth.constants";
 import { auth } from "@/lib/auth";
-import { resolveCallbackUrlFromString } from "@/lib/callback-urls";
 import { signInSchema, signUpSchema } from "@/lib/validations/auth.schema";
 
-const withCallbackUrl = z.object({
-  callbackUrl: z.string().optional(),
-});
-
-export const signInAction = actionCreator(signInSchema.extend(withCallbackUrl.shape), async (data) => {
+export const signInAction = actionCreator(signInSchema, async (data) => {
   await auth.api.signInEmail({
     body: {
       email: data.email,
@@ -21,11 +16,10 @@ export const signInAction = actionCreator(signInSchema.extend(withCallbackUrl.sh
     headers: await headers(),
   });
 
-  const destination = resolveCallbackUrlFromString(data.callbackUrl);
-  redirect(destination);
+  redirect(AUTH_CONFIG.ROUTES.HOME);
 });
 
-export const signUpAction = actionCreator(signUpSchema.extend(withCallbackUrl.shape), async (data) => {
+export const signUpAction = actionCreator(signUpSchema, async (data) => {
   await auth.api.signUpEmail({
     body: {
       name: data.username,
@@ -36,6 +30,5 @@ export const signUpAction = actionCreator(signUpSchema.extend(withCallbackUrl.sh
     headers: await headers(),
   });
 
-  const destination = resolveCallbackUrlFromString(data.callbackUrl);
-  redirect(destination);
+  redirect(AUTH_CONFIG.ROUTES.HOME);
 });

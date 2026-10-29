@@ -12,11 +12,7 @@ import { cn } from "@/lib/utils";
 import { type SignUpInput, signUpSchema } from "@/lib/validations/auth.schema";
 import { signUpAction } from "../../actions";
 
-type SignUPFormProps = {
-  callbackUrl: string;
-};
-
-export default function SignUpForm({ callbackUrl }: SignUPFormProps) {
+export default function SignUpForm() {
   const form = useForm({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -31,7 +27,7 @@ export default function SignUpForm({ callbackUrl }: SignUPFormProps) {
 
   async function onSubmit(values: SignUpInput) {
     try {
-      const result = await signUpAction({ ...values, callbackUrl });
+      const result = await signUpAction(values);
       if (result.success) {
         toast.success(result.message);
       } else {

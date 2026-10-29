@@ -8,12 +8,11 @@ import { AUTH_CONFIG } from "@/constants/auth.constants";
 type SignInHeaderWithGoogleProviderProps = {
   children: React.ReactNode;
   isSignIn?: boolean;
-  callbackUrl: string;
   modal?: boolean;
 };
 
-const AuthHeaderWithProvider = ({ children, isSignIn, callbackUrl, modal }: SignInHeaderWithGoogleProviderProps) => {
-  const href = `${isSignIn ? AUTH_CONFIG.ROUTES.SIGN_UP : AUTH_CONFIG.ROUTES.SIGN_IN}?callbackUrl=${encodeURIComponent(callbackUrl)}`;
+const AuthHeaderWithProvider = ({ children, isSignIn, modal }: SignInHeaderWithGoogleProviderProps) => {
+  const href = `${isSignIn ? AUTH_CONFIG.ROUTES.SIGN_UP : AUTH_CONFIG.ROUTES.SIGN_IN}`;
 
   return (
     <>

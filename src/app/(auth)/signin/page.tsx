@@ -3,32 +3,25 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import AuthHeaderWithProvider from "@/components/auth/AuthHeaderWithProvider";
 import SignInForm from "@/components/auth/SignInForm";
+import { AUTH_CONFIG } from "@/constants/auth.constants";
 import { auth } from "@/lib/auth";
-import { resolveCallbackUrl } from "@/lib/callback-urls";
-
-type SignInPageProps = {
-  searchParams: Promise<{ callbackUrl?: string }>;
-};
 
 export const metadata: Metadata = {
   title: "Sign In | Hotel Booking",
   description: "Sign in to your Hotel Booking account to manage reservations, view trips, and access your account.",
 };
 
-const SignInPage = async ({ searchParams }: SignInPageProps) => {
-  const resolvedParams = await searchParams;
-  const params = new URLSearchParams(resolvedParams as Record<string, string>);
-  const callbackUrl = resolveCallbackUrl(params);
+const SignInPage = async () => {
   const session = await auth.api.getSession({ headers: await headers() });
 
   if (session?.user) {
-    redirect(callbackUrl);
+    redirect(AUTH_CONFIG.ROUTES.HOME);
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
       <div className="bg-card text-card-foreground border border-border rounded-xl shadow-lg w-96 p-6 relative">
-        <AuthHeaderWithProvider isSignIn={true} callbackUrl={callbackUrl}>
-          <SignInForm callbackUrl={callbackUrl} />
+        <AuthHeaderWithProvider isSignIn={true}>
+          <SignInForm />
         </AuthHeaderWithProvider>
       </div>
     </div>
